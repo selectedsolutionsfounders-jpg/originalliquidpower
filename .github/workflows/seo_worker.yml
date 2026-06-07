@@ -11,17 +11,20 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-    steps:
-      - uses: actions/checkout@v3
+
       - name: Instalar Python
         uses: actions/setup-python@v4
-        with: {python-version: '3.11'}
+        with:
+          python-version: '3.11'
+
       - name: Instalar librerías
         run: pip install google-genai
+
       - name: Ejecutar IA
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python seo_bot.py
+
       - name: Subir cambios
         run: |
           git config user.name "Empleado IA"
@@ -29,4 +32,3 @@ jobs:
           git add index.html
           git commit -m "Auto-optimización SEO"
           git push
-          # Forzando activacion
