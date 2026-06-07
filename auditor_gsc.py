@@ -85,7 +85,7 @@ def ejecutar_auditoria_semanal():
         print(f"\n📡 Inspeccionando en GSC: {url_remota}")
         try:
             request_body = {
-                "inspectUrl": url_remota,
+                "inspectionUrl": url_remota,
                 "siteUrl": DOMINIO,
                 "languageCode": "es"
             }
