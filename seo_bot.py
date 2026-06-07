@@ -13,7 +13,7 @@ def ejecutar_seo():
 
     # 3. Llamamos al modelo
     response = client.models.generate_content(
-        model='gemini-1.5-flash',
+        model='gemini-2.5-flash',
         contents=prompt
     )
 
