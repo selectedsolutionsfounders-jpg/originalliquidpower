@@ -7,7 +7,7 @@ from googleapiclient.discovery import build
 # =====================================================================
 # CONFIGURACIÓN DEL SITIO (Cambia esto por tu dominio real registrado)
 # =====================================================================
-DOMINIO = "https://originalliquidpower.com/" 
+DOMINIO = "originalliquidpower.com" 
 
 MAPEO_URLS = {
     f"{DOMINIO}index.html": "index.html",
@@ -86,7 +86,7 @@ def ejecutar_auditoria_semanal():
         try:
             request_body = {
                 "inspectionUrl": url_remota,
-                "siteUrl": DOMINIO,
+                "siteUrl": "sc-domain:originalliquidpower.com",
                 "languageCode": "es"
             }
             # Llamada oficial a la API de Inspección de Google
