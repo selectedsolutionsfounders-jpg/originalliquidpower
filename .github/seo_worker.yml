@@ -1,0 +1,28 @@
+name: Empleado IA SEO
+on:
+  schedule:
+    - cron: '0 0 */4 * *' # Esto se ejecuta automáticamente cada 4 días
+  workflow_dispatch: # Esto permite que tú lo fuerces cuando quieras
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar Python
+        uses: actions/setup-python@v4
+        with: {python-version: '3.9'}
+      - name: Instalar librerías
+        run: pip install google-generativeai
+      - name: Ejecutar IA
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python seo_bot.py
+      - name: Subir cambios
+        run: |
+          git config user.name "Empleado IA"
+          git config user.email "bot@seo.com"
+          git add index.html
+          git commit -m "Auto-optimización SEO"
+          git push
+          # Forzando activacion
