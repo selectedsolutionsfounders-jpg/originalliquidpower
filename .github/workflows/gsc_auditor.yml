@@ -1,0 +1,39 @@
+name: Empleado IA Auditor GSC
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Se ejecuta automáticamente todos los domingos a las 00:00 (Semanal)
+  workflow_dispatch: # Permite ejecución manual instantánea desde la web de GitHub
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar librerías de Google y Gemini
+        run: pip install google-genai google-api-python-client google-auth
+
+      - name: Ejecutar Auditoría GSC
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+        run: python auditor_gsc.py
+
+      - name: Aplicar Parches de Indexación
+        run: |
+          git config user.name "Auditor GSC IA"
+          git config user.email "auditor@seo.com"
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "Auto-reparación técnica de indexación basada en alertas de GSC"
+            git push
+          else
+            echo "Sin errores detectados por GSC esta semana. Todo limpio."
+          fi
